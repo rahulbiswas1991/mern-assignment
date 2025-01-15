@@ -1,0 +1,13 @@
+{
+    "url":"localhost:3000",
+    "api":{
+        "user_post":"http://localhost:3001/api/v1/users/addUser",
+        "user_get":"http://localhost:3001/api/v1/users/allUsers",
+        "user_update":"http://localhost:3001/api/v1/users/editUser",
+        "user_delete":"http://localhost:3001/api/v1/users/deleteUser",
+        "product_post":"http://localhost:3001/api/v1/products/addProduct",
+        "product_get":"http://localhost:3001/api/v1/products/allProducts",
+        "product_update":"http://localhost:3001/api/v1/products/editProduct",
+        "product_delete":"http://localhost:3001/api/v1/products/deleteProduct"
+    }
+}

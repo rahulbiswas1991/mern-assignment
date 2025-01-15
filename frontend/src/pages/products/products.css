@@ -1,0 +1,10 @@
+.product-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+    width: 100%;
+    align-items: start;
+    border: 1px dashed grey;
+    padding: 15px;
+}
