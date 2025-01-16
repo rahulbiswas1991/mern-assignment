@@ -15,32 +15,28 @@ function UserOperation({ userData }) {
 
     //Handle editable data
     useEffect(() => {
-        console.log("user data triggered");
-        
         if (typeof userData.dob !== "undefined" && userData.dob) {
             userData.dob = moment(userData.dob).format("YYYY-MM-DD");
             setFormData(userData);
-        }else{
+        } else {
             setFormData({
                 name: "",
                 email: "",
                 dob: "",
             })
         }
-        console.log(userData);
-        
     }, [userData])
 
     // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if(name === "dob"){
-            const utcDate= moment(value).format("YYYY-MM-DD");
+        if (name === "dob") {
+            const utcDate = moment(value).format("YYYY-MM-DD");
             setFormData((prev) => ({
                 ...prev,
                 [name]: utcDate,
             }));
-        }else{
+        } else {
             setFormData((prev) => ({
                 ...prev,
                 [name]: value,
@@ -54,7 +50,7 @@ function UserOperation({ userData }) {
         if (typeof formData.id !== 'undefined') {
             dispatch(editUserRequest(formData))
         } else {
-        //Dispath new user data
+            //Dispath new user data
             if (formData.name && formData.email && formData.dob) {
                 dispatch(addUserRequest(formData));
             } else {

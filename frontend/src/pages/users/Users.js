@@ -27,23 +27,20 @@ function Users() {
     const [userData, setUserData] = useState({});
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
-    const [showError, setShowError] = useState({isError:false,message:""});
+    const [showError, setShowError] = useState({ isError: false, message: "" });
 
     const dispatch = useDispatch();
 
-    // Fetch data whenever page or rowsPerPage changes
     useEffect(() => {
         dispatch(userRequest({ limit: rowsPerPage, page: page + 1 }));
     }, [page, rowsPerPage]);
 
-    // Update local state when store data changes
     useEffect(() => {
-        if(storeUser.isError){
-            setShowError({isError:storeUser.isError,message:storeUser.errorMessage});
+        if (storeUser.isError) {
+            setShowError({ isError: storeUser.isError, message: storeUser.errorMessage });
         }
         setInitialVal(storeUser?.data || []);
         setCount(storeUser?.count || 0);
-        console.log("storeUser:", storeUser)
     }, [storeUser]);
 
     const columns = [
@@ -78,7 +75,6 @@ function Users() {
     };
 
     const handleEdit = (user) => {
-        console.log("user",user);
         setUserData(user);
         // Handle edit logic here
     };
@@ -92,7 +88,6 @@ function Users() {
     const handleCloseDialog = (confirmed) => {
         setDialogOpen(false);
         if (confirmed && selectedId) {
-            console.log("Confirmed delete for ID:", selectedId);
             dispatch(deleteUserRequest(selectedId));
         }
         setSelectedId(null);
@@ -101,8 +96,8 @@ function Users() {
     return (
         <>
             <Header />
-            {showError.isError && <Snackbar isError={showError.isError} message={showError.message}/>}
-            <UserOperation userData = {userData}/>
+            {showError.isError && <Snackbar isError={showError.isError} message={showError.message} />}
+            <UserOperation userData={userData} />
             <h3 className='m-3'>User List</h3>
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>

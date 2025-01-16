@@ -40,10 +40,6 @@ function ProductOperation({ productData }) {
         setUserData(getAllNames(storeUser.data));
     }, [storeUser]);
 
-    useEffect(() => {
-        console.log("formData", formData)
-    }, [formData]);
-
     //Handle editable data
     useEffect(() => {
         if (typeof productData.id !== "undefined" && productData.id) {
@@ -88,7 +84,6 @@ function ProductOperation({ productData }) {
     }
     //Handle Picture
     const handleFileChange = (event) => {
-        console.log("file change triggered");
         setPreviewUrl(null);
         const selectedFile = event.target.files[0];
         if (!selectedFile) {
@@ -98,13 +93,12 @@ function ProductOperation({ productData }) {
         // Use FileReader to read the file as an ArrayBuffer
         const reader = new FileReader();
         reader.onload = () => {
-            const fileBuffer = reader.result; // Get the binary data
+            const fileBuffer = reader.result;
             const base64 = arrayBufferToBase64(fileBuffer);
-            console.log(fileBuffer, "base64", base64);
 
             setFormData((prevFormData) => ({
                 ...prevFormData,
-                picture: base64 // Save the buffer in formData
+                picture: base64
             }));
         };
         reader.readAsArrayBuffer(selectedFile);
@@ -115,18 +109,14 @@ function ProductOperation({ productData }) {
 
     //handle User
     const handleUserChange = (event) => {
-        console.log("event.target", event.target.value);
-
         const selectedUser = event.target.value;
         if (selectedUser) {
             setFormData({ ...formData, userId: selectedUser })
         }
         setUser(selectedUser);
-
     }
     // Handle form submission
     const handleFormSubmit = () => {
-        console.log("Form Data Submitted:", formData, typeof formData.id);
         //Dispatch edit product data
         if (typeof formData.id !== 'undefined') {
             dispatch(editProductRequest(formData))

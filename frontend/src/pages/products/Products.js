@@ -29,27 +29,22 @@ function Products() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const [selectedFIlter, setSelectedFilter] = useState("filterUser");
-    const [filterData, setFilterData] = useState({user:"filterUser"});
+    const [filterData, setFilterData] = useState({ user: "filterUser" });
     const [sliderVal, setSliderVal] = useState();
-    const [showError, setShowError] = useState({isError:false,message:""});
-
+    const [showError, setShowError] = useState({ isError: false, message: "" });
 
     const dispatch = useDispatch();
 
-    // Fetch data whenever page or rowsPerPage changes
     useEffect(() => {
         dispatch(productRequest({ limit: rowsPerPage, page: page + 1 }));
     }, [page, rowsPerPage]);
     useEffect(() => {
-        setFilterData({...filterData, value:sliderVal})
+        setFilterData({ ...filterData, value: sliderVal })
     }, [sliderVal]);
 
-    // Update local state when store data changes
     useEffect(() => {
-        console.log("storeProduct",storeProduct);
-        
-        if(storeProduct.isError){
-            setShowError({isError:storeProduct.isError,message:storeProduct.errorMessage});
+        if (storeProduct.isError) {
+            setShowError({ isError: storeProduct.isError, message: storeProduct.errorMessage });
         }
         setInitialVal(storeProduct?.data || []);
         setCount(storeProduct?.count || 0);
@@ -73,7 +68,6 @@ function Products() {
         return { id, pname, cost, picture, userName, userId, createdAt, updatedAt };
     }
 
-    // Create rows from initialVal
     const rows = initialVal.length > 0
         ? initialVal.map(val => createData(val._id, val.pname, val.cost, val.picture, val.userName, val.userId, val.createdAt, val.updatedAt))
         : [];
@@ -89,9 +83,7 @@ function Products() {
     };
 
     const handleEdit = (product) => {
-        console.log("product", product);
         setProductData(product);
-        // Handle edit logic here
     };
 
     const handleDelete = (id) => {
@@ -102,33 +94,29 @@ function Products() {
     const handleCloseDialog = (confirmed) => {
         setDialogOpen(false);
         if (confirmed && selectedId) {
-            console.log("Confirmed delete for ID:", selectedId);
             dispatch(deleteProductRequest(selectedId));
         }
         setSelectedId(null);
     };
-    const handleFilterData = (event)=>{
-        console.log(event.target);
-        
-        const {name, value} = event.target;
-        if(name === "user"){
+    const handleFilterData = (event) => {
+
+        const { name, value } = event.target;
+        if (name === "user") {
             setSelectedFilter(value);
         }
         setFilterData({
-            ...filterData, 
-            [name]:value
+            ...filterData,
+            [name]: value
         })
-
     }
-    const handleFIlter = ()=>{
+    const handleFIlter = () => {
         dispatch(productRequest({ limit: rowsPerPage, page: page + 1, filterData }))
     }
-    
 
     return (
         <>
             <Header />
-            {showError.isError && <Snackbar isError={showError.isError} message={showError.message}/>}
+            {showError.isError && <Snackbar isError={showError.isError} message={showError.message} />}
             <ProductOperation productData={productData} />
             <div className='d-flex flex-row justify-content-start align-items-center'>
                 <h3 className='m-3'>Product List</h3>
@@ -153,8 +141,8 @@ function Products() {
                     </MenuItem>
                 </Select>
                 {filterData.user !== "filterCost"
-                ? <input type='text' name='searchInput' onChange={handleFilterData} placeholder='Search...' className='form-control mx-3 w-25'/>
-                : <SliderBar setValue={setSliderVal}/>
+                    ? <input type='text' name='searchInput' onChange={handleFilterData} placeholder='Search...' className='form-control mx-3 w-25' />
+                    : <SliderBar setValue={setSliderVal} />
                 }
                 <button className='btn btn-primary mx-3' onClick={handleFIlter}>Filter</button>
             </div>
@@ -189,11 +177,11 @@ function Products() {
                                             if (column.id === 'picture') {
                                                 return <TableCell key={column.id} align={column.align}>
                                                     {value ?
-                                                    <img
-                                                        src={`data:image/png;base64,${value}`}
-                                                        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                                                        loading="lazy"
-                                                    />: "No image found"
+                                                        <img
+                                                            src={`data:image/png;base64,${value}`}
+                                                            style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                                                            loading="lazy"
+                                                        /> : "No image found"
                                                     }
                                                 </TableCell>
                                             }
