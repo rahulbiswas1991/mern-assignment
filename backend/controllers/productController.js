@@ -54,14 +54,13 @@ exports.addProductApi = async (req, res, next) => {
         if (!pname || !cost || !userId) {
             return next(new AppError('Please provide all inputs', 401));
         } else {
-            const count = await productModel.totalProductCount();
             const addProduct = await productModel.addProductToDB(
                 pname,
                 buffer,
                 cost,
                 userId
             );
-            
+            const count = await productModel.totalProductCount();
             if (addProduct._id) {
                 const responseData = {
                     ...addProduct._doc,

@@ -82,7 +82,7 @@ exports.addUser = async (name, email, dob) => {
 exports.editUser = async (id, name, email, dob) => {
     try {
         const editData = { name, email, dob };
-        return await User.findByIdAndUpdate(id, editData, { new: true });
+        return await User.findByIdAndUpdate(id, editData, { runValidators: true, new: true });
     } catch (error) {
         return new AppError(error, 400);
     }
